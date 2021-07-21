@@ -1,9 +1,10 @@
 import discord
 import os
-import json
-import random
+import requests
 
 client = discord.Client()
+item = requests.get("https://mlb21.theshow.com/apis/items.json?type=mlb_card&page=1")
+print(item.json()['items'][0].keys())
 
 @client.event
 async def on_ready():
@@ -19,7 +20,7 @@ async def on_message(message):
     if msg.startswith('!stat'):
         if (len(msg_split) < 3) :
           await message.channel.send("Either player or stat missing. Format your message as \"!stat player_name stat_name\"")
-        
-        await message.channel.send(msg_split[1])
+        else:
+          await message.channel.send(msg_split[1])
 
 client.run(os.getenv('TOKEN'))
