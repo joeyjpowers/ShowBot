@@ -49,14 +49,36 @@ def findStat(msg_split, message):
         player_name = page.json()['items'][i]['name'].split()
         if (i == 0):
           firstName = page.json()['items'][i]['name'].split()
+        #for j in range(len(player_name)):
+         # player_name[j] = player_name[j].lower()
+         # if (i == 0):
+         #   firstName[j] = firstName[j].lower()
         for j in range(len(player_name)):
           player_name[j] = player_name[j].lower()
-          if (i == 0):
+          if i == 0:
             firstName[j] = firstName[j].lower()
+        #try:
+        name = msg_split[1:1+len(player_name)]
+        for j in range(len(name)):
+          name[j] = name[j].lower()
+        series = msg_split[len(player_name) + 1:len(msg_split) - 1]
+        for j in range(len(series)):
+          series[j] = series[j].lower()
+        #except:
+         # print("Error with player name ", end = "")
+         # print(player_name, end="")
+         # print(" and serach name ", end="")
+         # print(name)
+         # continue
         print("Player name")
         print(player_name)
+        #print("Series ")
         #print("First name")
         #print(firstName)
+        print("Name")
+        print(name)
+        #print("series name")
+        #print(series)
         cont = True
         if (len(name) == len(player_name)):
           cont = False
@@ -66,11 +88,23 @@ def findStat(msg_split, message):
               #if (found == 1):
               # found = 2
               break
-        if (not cont) :
-          print(page.json()['items'][i]['series'])
-          if (series == page.json()['items'][i]['series'].lower()):
+        if (not cont and len(series) > 0) :
+          #print(page.json()['items'][i]['series'])
+          checkSeries = page.json()['items'][i]['series'].split()
+          for j in range(len(checkSeries)):
+            checkSeries[j] = checkSeries[j].lower()
+          print("series")
+          print(series)
+          print("check series")
+          print(checkSeries)
+          match = True
+          for x in range(len(series)):
+            if not series[x] == checkSeries[x]:
+              match = False
+              break
+          if (match):
             statValue = page.json()['items'][i][input_stat]
-            return [page.json()['items'][i]['name'] + "\'s " + input_stat + " is " + str(statValue)]
+            return [page.json()['items'][i]['name'] + "\'s " + page.json()['items'][i]['series'] + " series card's " + input_stat + " is " + str(statValue)]
           else:
             cont = True
 
@@ -81,7 +115,8 @@ def findStat(msg_split, message):
          # if (len(foundPlayers) == 1):
           #  statValue = page.json()['items'][i][input_stat]
         #  return [page.json()['items'][i]['name'] + "\'s " + input_stat + " is " + str(statValue)]
-      
+        elif not cont:
+         cont = True
       #increases page number by 1 if still searching for players with same name
       #if (found == 1):
        # pageNumber += 1
