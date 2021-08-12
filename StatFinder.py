@@ -98,10 +98,13 @@ def findStat(msg_split, message):
           print("check series")
           print(checkSeries)
           match = True
-          for x in range(len(series)):
-            if not series[x] == checkSeries[x]:
-              match = False
-              break
+          if (len(series) == len(checkSeries)):
+            for x in range(len(series)):
+              if not series[x] == checkSeries[x]:
+                match = False
+                break
+          else:
+            match = False
           if (match):
             statValue = page.json()['items'][i][input_stat]
             return [page.json()['items'][i]['name'] + "\'s " + page.json()['items'][i]['series'] + " series card's " + input_stat + " is " + str(statValue)]
@@ -132,4 +135,4 @@ def findStat(msg_split, message):
           continue
         pageNumber += (total_pages - pageNumber) // 2
         print("second" + str(pageNumber))
-  return ["The card you searched for could not be found. Please enter the player's full name as it is displayed in MLB The Show 21 and the card's series"]
+  return ["The card you searched for could not be found. Please enter the player's full name as it is displayed in MLB The Show 21 and the card's series exactly as it is written on the card"]
