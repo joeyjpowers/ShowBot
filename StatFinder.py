@@ -41,7 +41,7 @@ def findStat(msg_split, message):
     #found = 0 #integer representing whether player has been found yet, 0 means not found yet, 1 means found and still searching, 2 means found all players with same name
     #print(len(foundPlayers))
 
-    while (not pageNumber <= 0 and not pageNumber > total_pages):
+    while (pageNumber <= total_pages):
       print(pageNumber)
       page = requests.get("https://mlb21.theshow.com/apis/items.json?type=mlb_card&page=" + str(pageNumber))
       print(type(page.json()['items'][0]))
@@ -85,11 +85,16 @@ def findStat(msg_split, message):
       #increases page number by 1 if still searching for players with same name
       #if (found == 1):
        # pageNumber += 1
-
+      if (pageNumber == total_pages):
+        break
       if (firstName[0] > name[0]):
-        pageNumber -= 1
+        total_pages = pageNumber
+        pageNumber = pageNumber // 2
         print("first" + str(pageNumber))
       else:
-        pageNumber += 1
+        if (pageNumber == total_pages - 1):
+          pageNumber += 1
+          continue
+        pageNumber += (total_pages - pageNumber) // 2
         print("second" + str(pageNumber))
   return ["The card you searched for could not be found. Please enter the player's full name as it is displayed in MLB The Show 21 and the card's series"]
