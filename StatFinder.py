@@ -10,10 +10,10 @@ def findStat(msg_split, message):
 
   #check if message has valid length
   if (len(msg_split) < 5) : 
-    if (len(msg_split) == 2 and msg_split[1] == 'stats_list'):
+    if (len(msg_split) == 1 and msg_split[0] == '!statlist'):
       return [stats]
     else:
-      return ["Either player, stat, or both are missing. Format your message as \"!stat player_name series stat_name\"", "If you would like a list of stat names, please send \"!stat stats_list\""]
+      return ["Either player, stat, or both are missing. Format your message as \"!stat player series stat\"", "If you would like a list of stat names, please send \"!statlist\""]
 
   else:
     #check if valid stat is inputted
