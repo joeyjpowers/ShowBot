@@ -1,3 +1,1 @@
 discord.py
-SeriesFinder.py
-StatFinder.py
